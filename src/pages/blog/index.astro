@@ -1,0 +1,21 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import PostList from "../../components/PostList.astro";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<Layout
+  title="博客"
+  description="文波的个人博客，记录 Java 后端、Spring Boot、RAG、Agent 和工程化实践。"
+>
+  <section class="page-heading" aria-labelledby="blog-title">
+    <h1 id="blog-title">博客</h1>
+    <p>关于后端工程、Agent 应用和持续学习的笔记。</p>
+  </section>
+
+  <PostList posts={posts} />
+</Layout>

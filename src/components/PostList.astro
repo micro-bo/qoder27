@@ -1,0 +1,47 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { withBase } from "../utils/paths";
+
+interface Props {
+  posts: CollectionEntry<"blog">[];
+}
+
+const { posts } = Astro.props;
+
+const formatStampDay = (date: Date) =>
+  new Intl.DateTimeFormat("zh-CN", {
+    month: "long",
+    day: "numeric"
+  }).format(date);
+
+const formatStampYear = (date: Date) =>
+  new Intl.DateTimeFormat("zh-CN", {
+    year: "numeric"
+  }).format(date);
+---
+
+<ol class="plain-list">
+  {
+    posts.map((post) => (
+      <li class="list-item">
+        <article class="post-list-item">
+          <div class="post-stamp" aria-label="发布日期">
+            <span class="post-stamp-day">{formatStampDay(post.data.pubDate)}</span>
+            <span>{formatStampYear(post.data.pubDate)}</span>
+          </div>
+          <div class="post-entry">
+            <h3>
+              <a href={withBase(`/blog/${post.id}/`)}>{post.data.title}</a>
+            </h3>
+            <p class="summary">{post.data.description}</p>
+            <ul class="tag-list" aria-label={`${post.data.title} 标签`}>
+              {post.data.tags.map((tag) => (
+                <li>{tag}</li>
+              ))}
+            </ul>
+          </div>
+        </article>
+      </li>
+    ))
+  }
+</ol>

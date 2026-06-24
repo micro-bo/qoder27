@@ -1,0 +1,51 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import PostList from "../components/PostList.astro";
+import ProjectList from "../components/ProjectList.astro";
+import { projects } from "../data/projects";
+import { withBase } from "../utils/paths";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const recentPosts = posts.slice(0, 3);
+const selectedProjects = projects.slice(0, 3);
+---
+
+<Layout title="文波">
+  <section class="intro" aria-labelledby="intro-title">
+    <h1 id="intro-title">我是<em>文波</em></h1>
+    <p>
+      Java 后端 / Agent 应用开发方向。关注 Java、Spring Boot、RAG、Agent、工程化实践，也会记录一些系统设计和长期学习笔记。
+    </p>
+  </section>
+
+  <section class="section" aria-labelledby="recent-posts">
+    <div class="section-header">
+      <h2 id="recent-posts">近期文章</h2>
+      <a href={withBase("/blog/")}>全部文章</a>
+    </div>
+    <PostList posts={recentPosts} />
+  </section>
+
+  <section class="section" aria-labelledby="selected-projects">
+    <div class="section-header">
+      <h2 id="selected-projects">项目选摘</h2>
+      <a href={withBase("/projects/")}>全部项目</a>
+    </div>
+    <ProjectList projects={selectedProjects} />
+  </section>
+
+  <section class="section" aria-labelledby="elsewhere">
+    <div class="section-header">
+      <h2 id="elsewhere">别处</h2>
+    </div>
+    <ul class="inline-list">
+      <li><a href="https://github.com/your-name">GitHub</a></li>
+      <li><a href="mailto:wenbo@example.com">邮箱</a></li>
+      <li><a href="https://www.linkedin.com/in/your-name">LinkedIn</a></li>
+    </ul>
+  </section>
+</Layout>

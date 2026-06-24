@@ -1,0 +1,88 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { resume } from "../data/resume";
+---
+
+<Layout title="简历" description="文波的个人简历，占位内容适合后续替换。">
+  <section class="page-heading" aria-labelledby="resume-title">
+    <h1 id="resume-title">简历</h1>
+    <p>{resume.basics.summary}</p>
+  </section>
+
+  <section class="page-section" aria-labelledby="basic-info">
+    <h2 id="basic-info">基本信息</h2>
+    <div class="resume-block">
+      <h3>{resume.basics.name}</h3>
+      <p>{resume.basics.role}</p>
+      <p>{resume.basics.location}</p>
+      <ul class="inline-list">
+        {
+          resume.basics.links.map((link) => (
+            <li>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="page-section" aria-labelledby="tech-stack">
+    <h2 id="tech-stack">技术栈</h2>
+    {
+      resume.techStack.map((group) => (
+        <div class="resume-block">
+          <h3>{group.category}</h3>
+          <p>{group.items.join(" / ")}</p>
+        </div>
+      ))
+    }
+  </section>
+
+  <section class="page-section" aria-labelledby="education">
+    <h2 id="education">教育背景</h2>
+    {
+      resume.education.map((item) => (
+        <div class="resume-block">
+          <h3>{item.school}</h3>
+          <p>{item.degree}</p>
+          <p class="meta">{item.period}</p>
+        </div>
+      ))
+    }
+  </section>
+
+  <section class="page-section" aria-labelledby="experience">
+    <h2 id="experience">工作经历</h2>
+    {
+      resume.experience.map((item) => (
+        <div class="resume-block">
+          <h3>{item.company} · {item.role}</h3>
+          <p class="meta">{item.period}</p>
+          <ul>
+            {item.highlights.map((highlight) => (
+              <li>{highlight}</li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </section>
+
+  <section class="page-section" aria-labelledby="project-experience">
+    <h2 id="project-experience">项目经历</h2>
+    {
+      resume.projects.map((project) => (
+        <div class="resume-block">
+          <h3>{project.name}</h3>
+          <p>{project.description}</p>
+          <ul>
+            {project.highlights.map((highlight) => (
+              <li>{highlight}</li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </section>
+</Layout>

@@ -1,0 +1,30 @@
+---
+import type { Project } from "../data/projects";
+import { withBase } from "../utils/paths";
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+---
+
+<ol class="plain-list">
+  {
+    projects.map((project) => (
+      <li class="list-item">
+        <article>
+          <h3>
+            <a href={withBase(`/projects/#${project.slug}`)}>{project.name}</a>
+          </h3>
+          <p class="summary">{project.description}</p>
+          <ul class="tag-list" aria-label={`${project.name} 技术栈`}>
+            {project.techStack.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </article>
+      </li>
+    ))
+  }
+</ol>

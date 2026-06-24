@@ -1,0 +1,39 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { projects } from "../data/projects";
+---
+
+<Layout title="项目" description="文波的项目列表，包含短链系统、RAG 应用和个人网站项目。">
+  <section class="page-heading" aria-labelledby="projects-title">
+    <h1 id="projects-title">项目</h1>
+    <p>一些围绕后端系统、Agent 应用和个人工程实践的小型项目。</p>
+  </section>
+
+  <section aria-label="项目列表">
+    {
+      projects.map((project) => (
+        <article class="project-detail" id={project.slug}>
+          <h2>{project.name}</h2>
+          <p>{project.description}</p>
+
+          <ul class="tag-list" aria-label={`${project.name} 技术栈`}>
+            {project.techStack.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+
+          <h3>亮点</h3>
+          <ul>
+            {project.highlights.map((highlight) => (
+              <li>{highlight}</li>
+            ))}
+          </ul>
+
+          <p>
+            <a href={project.githubUrl}>GitHub</a>
+          </p>
+        </article>
+      ))
+    }
+  </section>
+</Layout>

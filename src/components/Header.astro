@@ -1,0 +1,37 @@
+---
+import { stripBase, withBase } from "../utils/paths";
+
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+const activePath = stripBase(currentPath);
+
+const navItems = [
+  { href: "/", label: "首页" },
+  { href: "/blog/", label: "博客" },
+  { href: "/resume/", label: "简历" },
+  { href: "/projects/", label: "项目" }
+];
+
+const isActive = (href: string) =>
+  href === "/" ? activePath === "/" : activePath.startsWith(href);
+---
+
+<header class="site-header">
+  <a class="site-name" href={withBase("/")}>文波</a>
+  <nav class="site-nav" aria-label="主导航">
+    {
+      navItems.map((item) => (
+        <a
+          href={withBase(item.href)}
+          class:list={[{ active: isActive(item.href) }]}
+          aria-current={isActive(item.href) ? "page" : undefined}
+        >
+          {item.label}
+        </a>
+      ))
+    }
+  </nav>
+</header>
