@@ -21,6 +21,9 @@ jobs:
       - name: 检出代码
         uses: actions/checkout@v6
 
+      - name: 配置 GitHub Pages
+        uses: actions/configure-pages@v5
+
       - name: 安装、构建并上传站点
         uses: withastro/action@v6
         with:
